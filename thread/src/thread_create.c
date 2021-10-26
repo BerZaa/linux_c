@@ -19,7 +19,7 @@ void *thread_print(void *argument) {
 void *create_thread(void *argument) {
     pthread_t thread_id;
 
-    pthread_create(&thread_id, NULL, thread_print, "----son thread running----");
+    pthread_create(&thread_id, NULL, thread_print, "-----son thread running-----");
     printf("son thread create successfully\n");
     pthread_exit(NULL);
 }
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     pthread_create(&create_thread_id, NULL, create_thread, NULL);
     pthread_join(create_thread_id, NULL);
     while(1) {
-        printf("----main thread running----\n");
+        printf("-----main thread running-----\n");
         sleep(2);
     }
 
