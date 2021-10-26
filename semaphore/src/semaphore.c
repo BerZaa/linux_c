@@ -78,7 +78,7 @@ int main(char argc, char *argv[]) {
         exit(4);         
     }
 
-    printf("shared buffer init value: %s\n", shraed_data);
+    printf("shared buffer init value: %s\n", shraed_data);                                  //将共享资源的初始化值打印出来
 
     pid = fork();
     if(pid != 0) {
