@@ -5,8 +5,7 @@
  * @Last Modified time: 2021-10-26 18:18:59
  */
 
-                                                                                            //头文件引入
-#include "stdio.h"
+#include "stdio.h"                                                                          //头文件引入
 #include "stdlib.h"
 #include "errno.h"
 #include "string.h"
@@ -80,7 +79,7 @@ int main(char argc, char *argv[]) {
 
     printf("shared buffer init value: %s\n", shraed_data);                                  //将共享资源的初始化值打印出来
 
-    pid = fork();
+    pid = fork();                                                                           //使用fork函数分裂进程，并将返回值给予pid
     if(pid != 0) {
         if(pid < 0) {
             printf("create process error\n");
