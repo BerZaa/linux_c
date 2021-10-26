@@ -62,7 +62,7 @@ int main(char argc, char *argv[]) {
 
     sem_key = atoi(argv[1]);                                                                //如果输入了参数，将输入的参数转换为整数保存在键值变量中
     sem_id = semget(sem_key, 1, 0666 | IPC_CREAT);                                          //使用系统API函数创建一个信号量
-    if(status == SEMAPHORE_ERRNO) {
+    if(status == SEMAPHORE_ERRNO) {                                                         //如果创建失败则打印提示信息并退出程序
         printf("create semaphore error\n");
         printf("ERROR MESSAGE: %s\nERROR CODE: %d\n", strerror(errno), errno);
 
@@ -70,7 +70,7 @@ int main(char argc, char *argv[]) {
     }
 
     sem_union.val = PER_VALUE;
-    status = semctl(sem_id, 0, SETVAL, sem_union);
+    status = semctl(sem_id, 0, SETVAL, sem_union);                                          //使用semctl函数初始化信号量的值
     if(status == SEMAPHORE_ERRNO) {
         printf("init semaphore error\n");
         printf("ERROR MESSAGE: %s\nERROR CODE: %d\n", strerror(errno), errno);
