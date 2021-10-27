@@ -115,7 +115,7 @@ int main(char argc, char *argv[]) {
             wait(NULL);
         }
     }
-    else {                                                                                  //子进程与父进程的实现思路一直，不再赘述
+    else {                                                                                  //子进程与父进程的实现思路一致，不再赘述
         printf("son process running\n");
         sleep(1);
 
