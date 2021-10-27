@@ -1,8 +1,8 @@
 /*
  * @Author: BerZaa 
  * @Date: 2021-10-24 21:32:28 
- * @Last Modified by: BerZaa
- * @Last Modified time: 2021-10-26 18:18:59
+ * @Last Modified by:   BerZaa 
+ * @Last Modified time: 2021-10-27 11:21:02 
  */
 
 #include "stdio.h"                                                                          //头文件引入
@@ -80,22 +80,22 @@ int main(char argc, char *argv[]) {
     printf("shared buffer init value: %s\n", shraed_data);                                  //将共享资源的初始化值打印出来
 
     pid = fork();                                                                           //使用fork函数分裂进程，并将返回值给予pid
-    if(pid != 0) {
+    if(pid != 0) {                                                                          //判断pid
         if(pid < 0) {
             printf("create process error\n");
-            printf("ERROR MESSAGE: %s\nERROR CODE: %d\n", strerror(errno), errno);
+            printf("ERROR MESSAGE: %s\nERROR CODE: %d\n", strerror(errno), errno);          //在包含了errno.h以后，系统函数会对一个全局变量进行修改，再通过strerror函数可以输出错误信息，以下所有报错均以这种形式输出
 
             exit(5);               
         }
-        else {
+        else {                                                                              //判断pid来确定该进程是父进程还是子进程
             printf("father process running\n");
-            sleep(1);
+            sleep(1);                                                                       //等待一秒钟进程同步
             
-            while(1) {
-                status = sem_getvalue(sem_id);
-                if(status == EXCEPTNO) exit(6);
+            while(1) {                                                                      //在父进程中对做死循环，对共享资源进行修改并输出
+                status = sem_getvalue(sem_id);                                              //获取信号量的值
+                if(status == EXCEPTNO) exit(6);                                             //如果获取失败则退出程序
 
-                if(status == PER_VALUE) {
+                if(status == PER_VALUE) {                                                   //如果共享资源允许访问，则对信号量进行p操作，操作完共享资源以后进行v操作
                     status = sem_operate_p(sem_id);
                     if(status == EXCEPTNO) exit(7);
 
@@ -106,16 +106,16 @@ int main(char argc, char *argv[]) {
                     if(status == EXCEPTNO) exit(7);   
                 }
                 else {
-                    printf("wait son's v operater\n");
+                    printf("wait son's v operater\n");                                      //如果共享资源不允许访问，输出等待子进程的p操作
                 }
 
-                sleep(rand() % 10);
+                sleep(rand() % 10);                                                         //随机休眠时间使得父子进程即有可能同时对共享资源进行访问，也有可能对共享资源分开访问，打开验证功能的目的
             }
 
             wait(NULL);
         }
     }
-    else {
+    else {                                                                                  //子进程与父进程的实现思路一直，不再赘述
         printf("son process running\n");
         sleep(1);
 
@@ -144,7 +144,7 @@ int main(char argc, char *argv[]) {
     return 0;
 }
 
-int sem_operate_p(int sem_id) {
+int sem_operate_p(int sem_id) {                                                             //信号量p操作，成功返回0，不成功则返回制定失败数值，使用semop函数实现，有一项参数就是在全局变量定义的结构体
     int status;
 
     status = semop(sem_id, &p_operation, 1);
@@ -158,7 +158,7 @@ int sem_operate_p(int sem_id) {
     return 0;
 }
 
-int sem_operate_v(int sem_id) {
+int sem_operate_v(int sem_id) {                                                             //信号量v操作，与p操作类似，不再赘述
     int status;
 
     status = semop(sem_id, &v_operation, 1);
@@ -172,7 +172,7 @@ int sem_operate_v(int sem_id) {
     return 0;
 }
 
-int sem_getvalue(int sem_id) {
+int sem_getvalue(int sem_id) {                                                              //使用semctl函数获取信号量的值
     int status_value;
 
     status_value = semctl(sem_id, 0, GETVAL);
