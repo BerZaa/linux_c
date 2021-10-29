@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
+//与thread_create.c程序思路一致，在线程创建函数中循环创建100个线程，并传进线程号，在创建的线程中输出该线程号
 
 void *son_thread(void *argument) {
     printf("-       son thread index: %d      -\n", *((char *)argument));

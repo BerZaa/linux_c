@@ -4,7 +4,7 @@
  * @Last Modified by:   BerZaa 
  * @Last Modified time: 2021-10-24 21:32:02 
  */
-#include "stdio.h"
+#include "stdio.h"                                                                      //头文件引入
 #include "string.h"
 #include "stdlib.h"
 #include "sys/types.h"
@@ -12,12 +12,12 @@
 #include "sys/msg.h"
 #include "errno.h"
 
-#define STRING          1
-#define BUFFSIZE        BUFSIZ
-#define RUN             1
-#define STOP            0
-#define RW_PER          0666
-#define MESSAGE_ERRNO   -1
+#define STRING          1                                                                                                                 
+#define BUFFSIZE        BUFSIZ              
+#define RUN             1               
+#define STOP            0               
+#define RW_PER          0666            
+#define MESSAGE_ERRNO   -1                  
 
 typedef struct MESSAGE_CONTEXT {
     long int message_type;
